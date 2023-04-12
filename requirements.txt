@@ -12,6 +12,4 @@ pyvi
 emoji
 imblearn
 gensim
-findspark
 sklearn
-pyspark

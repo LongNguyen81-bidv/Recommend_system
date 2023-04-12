@@ -20,27 +20,6 @@ df2 = pd.read_csv('Products_2.csv')
 # combine 2 dataframes
 df = pd.concat([df1, df2], ignore_index=True)
 
-# define a function to get recommendations for a user return product_id and convert to list
-def get_recommendations_list(user):
-    # get the user_id_idx for the user_id
-    user_id_idx = df_user_user_id.filter(df_user_user_id.user == user).collect()[0][0]
-    # get the recommendations
-    result = spark.read.parquet('user_recs.parquet')
-    # get the recommendations for the user_id_idx
-    result = result.filter(result['user_id_idx']==user_id_idx)
-    # explode the recommendations
-    result = result.select(result.user_id_idx, explode(result.recommendations))
-    # get the product_id_idx and rating
-    result = result.withColumn('product_id_idx', result.col.getField('product_id_idx'))\
-                .withColumn('rating', result.col.getField('rating'))
-    # filter the recommendations with rating >= 3.0
-    result = result.filter(result.rating>=3.0)
-    # join the recommendations with the product_id_product_id_idx
-    result = result.join(df_product_id_product_id_idx, on=['product_id_idx'], how='left')
-    # return the recommendations and convert to list
-    return result.select('product_id').toPandas()['product_id'].tolist()
-
-
 ##### Build app
 
 # Title
@@ -177,33 +156,11 @@ elif choice == 'Recommendation':
         if st.button('Recommend from user'):
             if user != '':
                 
-                import findspark
-                findspark.init()
-                from pyspark import SparkContext
-                from pyspark.sql import SparkSession
-
-                sc = SparkContext(master='local[*]', appName='Recommendation_ratings')
-                spark = SparkSession(sc)
-
-                from pyspark.sql.functions import explode
-
-                # load df_user_user_id
-                df_user_user_id = spark.read.csv('df_user_user_id.csv', inferSchema=True, header=True)
-                # load df_product_id_product_id_idx
-                df_product_id_product_id_idx = spark.read.csv('df_product_id_product_id_idx.csv', inferSchema=True, header=True)
-
                 # list of product_id
                 product_id_list = get_recommendations_list(user)
-
-                # turn off spark
-                spark.stop()
-                # stop spark context
-                sc.stop()
-                
-                                
+                                                
                 # show data with top 10 similar products_id select more information from df
                 st.table(df[df['product_id'].isin(product_id_list)][['product_id','product_name','sub_category','price','rating']])
-                
-                
+                                
             else:
                 st.write('Please input a user_id')
