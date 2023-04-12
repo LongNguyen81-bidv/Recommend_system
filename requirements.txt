@@ -14,3 +14,4 @@ imblearn
 gensim
 findspark
 sklearn
+pyspark
