@@ -1,0 +1,16 @@
+numpy
+pandas
+matplotlib
+seaborn
+streamlit
+underthesea
+wordcloud
+import_ipynb
+statsmodels
+demoji	
+pyvi
+emoji
+imblearn
+gensim
+findspark
+sklearn
