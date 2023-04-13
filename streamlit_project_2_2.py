@@ -10,6 +10,8 @@ from underthesea import word_tokenize, pos_tag, sent_tokenize
 import warnings
 from gensim import corpora, models, similarities
 import re
+# import random library
+import random
 
 from function import *
 
@@ -209,11 +211,53 @@ elif choice == 'Recommendation':
         
         user = st.text_input('Input a user')
         
+        # load df_user_user_id.parquet use pandas
+        df_user_user_id = pd.read_parquet('df_user_user_id.parquet')
+        
+        df_user_unique = pd.Series(df_user_user_id["user"].unique())
+        user_rand_lst = [random.randint(0, df_user_unique.shape[0]) for i in range(30)] # show 10 rand user id
+        user_random = df_user_unique.iloc[user_rand_lst].tolist()
+        user_selected = st.selectbox("Chọn user ID", options = user_random) # sample 2211818709 có 5 sp recom
+        
+        
         if st.button('Recommend from user'):
             if user != '':
                 
                 # list of product_id
                 product_id_list = get_recommendations_list(user)
+                                                
+                # show data with top 10 similar products_id select more information from df
+                st.table(df[df['product_id'].isin(product_id_list)][['product_id','product_name','price','rating']])
+                
+                # get image and title of top 10 similar products_id
+                lst_link = df[df['product_id'].isin(product_id_list)]['image'].tolist()
+                
+                # get index of element in lst_link != N/A
+                lst_index = [i for i, x in enumerate(lst_link) if str(x) != 'nan']
+                # drop N/A value in lst_link
+                lst_link = [x for x in lst_link if str(x) != 'nan']
+                
+                # get list title of lst_link = product_name     
+                lst_title = df[df['product_id'].isin(product_id_list)]['product_name'].tolist()
+                # get title of lst_link = product_name from list lst_title with index in lst_index
+                lst_title = [lst_title[i] for i in lst_index]
+                
+                # get list product_id of lst_link = product_id
+                lst_product_id = df[df['product_id'].isin(product_id_list)]['product_id'].tolist()
+                # get product_id of lst_link = product_id from list lst_product_id with index in lst_index
+                lst_product_id = [str(lst_product_id[i]) for i in lst_index]
+                
+                # concat lst_title and lst_product_id
+                lst_title = [lst_title[i] + ' - ' + lst_product_id[i] for i in range(len(lst_title))]
+                
+                st.image(   lst_link, 
+                            width=150, 
+                            caption=lst_title,
+                                                        )
+            
+            elif user_selected != '':
+                # list of product_id
+                product_id_list = get_recommendations_list(user_selected)
                                                 
                 # show data with top 10 similar products_id select more information from df
                 st.table(df[df['product_id'].isin(product_id_list)][['product_id','product_name','price','rating']])
