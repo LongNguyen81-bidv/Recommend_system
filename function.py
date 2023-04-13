@@ -132,7 +132,7 @@ def sim_products_tfidf_gensim(product_id):
 
 
 # read data from user_recs.parquet
-df = pd.read_parquet('user_recs.parquet')
+df_ = pd.read_parquet('user_recs.parquet')
 # load df_user_user_id.parquet use pandas
 df_user_user_id = pd.read_parquet('df_user_user_id.parquet')
 # load df_product_id_product_id_idx.parquet use pandas
@@ -142,8 +142,8 @@ df_product_id_product_id_idx = pd.read_parquet('df_product_id_product_id_idx.par
 def get_recommendations_list_idx(user_id_idx):
     list_product_id_idx = []
     for i in range(5):
-        idx = df[df['user_id_idx']==user_id_idx]['recommendations'].index.values[0]
-        list_product_id_idx.append(df[df['user_id_idx']==user_id_idx]['recommendations'][idx][i]['product_id_idx'])
+        idx = df_[df_['user_id_idx']==user_id_idx]['recommendations'].index.values[0]
+        list_product_id_idx.append(df_[df_['user_id_idx']==user_id_idx]['recommendations'][idx][i]['product_id_idx'])
     return list_product_id_idx
 
 
