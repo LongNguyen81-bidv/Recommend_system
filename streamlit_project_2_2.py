@@ -225,7 +225,7 @@ elif choice == 'Recommendation':
                 product_id_list = get_recommendations_list(user)
                                                 
                 # show data with top 10 similar products_id select more information from df
-                st.table(df[df['product_id'].isin(product_id_list)][['product_id','product_name','sub_category','price','rating']])
+                st.table(df[df['product_id'].isin(product_id_list)][['product_id','product_name','price','rating']])
                 
                 # get image and title of top 10 similar products_id
                 lst_link = df[df['product_id'].isin(product_id_list)]['image'].tolist()
