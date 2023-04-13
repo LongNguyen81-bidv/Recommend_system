@@ -122,31 +122,31 @@ elif choice == 'Recommendation':
                 # show data with top 10 similar products_id
                 st.table(df[df['product_id'].isin(sim_products(keywords))][['product_id','product_name','price','rating']])
                 
-                # # get image and title of top 10 similar products_id
-                # lst_link = df[df['product_id'].isin(sim_products(keywords))]['image'].tolist()
+                # get image and title of top 10 similar products_id
+                lst_link = df[df['product_id'].isin(sim_products(keywords))]['image'].tolist()
                 
-                # # get index of element in lst_link != N/A
-                # lst_index = [i for i, x in enumerate(lst_link) if str(x) != 'nan']
-                # # drop N/A value in lst_link
-                # lst_link = [x for x in lst_link if str(x) != 'nan']
+                # get index of element in lst_link != N/A
+                lst_index = [i for i, x in enumerate(lst_link) if str(x) != 'nan']
+                # drop N/A value in lst_link
+                lst_link = [x for x in lst_link if str(x) != 'nan']
                 
-                # # get list title of lst_link = product_name     
-                # lst_title = df[df['product_id'].isin(sim_products(keywords))]['product_name'].tolist()
-                # # get title of lst_link = product_name from list lst_title with index in lst_index
-                # lst_title = [lst_title[i] for i in lst_index]
+                # get list title of lst_link = product_name     
+                lst_title = df[df['product_id'].isin(sim_products(keywords))]['product_name'].tolist()
+                # get title of lst_link = product_name from list lst_title with index in lst_index
+                lst_title = [lst_title[i] for i in lst_index]
                 
-                # # get list product_id of lst_link = product_id
-                # lst_product_id = df[df['product_id'].isin(sim_products(keywords))]['product_id'].tolist()
-                # # get product_id of lst_link = product_id from list lst_product_id with index in lst_index
-                # lst_product_id = [str(lst_product_id[i]) for i in lst_index]
+                # get list product_id of lst_link = product_id
+                lst_product_id = df[df['product_id'].isin(sim_products(keywords))]['product_id'].tolist()
+                # get product_id of lst_link = product_id from list lst_product_id with index in lst_index
+                lst_product_id = [str(lst_product_id[i]) for i in lst_index]
                 
-                # # concat lst_title and lst_product_id
-                # lst_title = [lst_title[i] + ' - ' + lst_product_id[i] for i in range(len(lst_title))]
+                # concat lst_title and lst_product_id
+                lst_title = [lst_title[i] + ' - ' + lst_product_id[i] for i in range(len(lst_title))]
                 
-                # st.image(   lst_link, 
-                #             width=150, 
-                #             caption=lst_title,
-                #                                         )
+                st.image(   lst_link, 
+                            width=150, 
+                            caption=lst_title,
+                                                        )
                 
             else:
                 st.write('Please input a keywords')
@@ -169,35 +169,36 @@ elif choice == 'Recommendation':
                 # show data of product_id
                 st.write('Data of product_id:', product_id)
                 st.table(df[df['product_id'] == product_id][['product_id','product_name','sub_category','price','rating']])
-                # # show data with top 10 similar products_id
-                # st.write('Top 10 similar products_id')
-                # st.table(df[df['product_id'].isin(sim_products_tfidf_gensim(product_id))][['product_id','product_name','price','rating']])
                 
-                # # get image and title of top 10 similar products_id
-                # lst_link = df[df['product_id'].isin(sim_products_tfidf_gensim(product_id))]['image'].tolist()
+                # show data with top 10 similar products_id
+                st.write('Top 10 similar products_id')
+                st.table(df[df['product_id'].isin(sim_products_tfidf_gensim(product_id))][['product_id','product_name','price','rating']])
                 
-                # # get index of element in lst_link != N/A
-                # lst_index = [i for i, x in enumerate(lst_link) if str(x) != 'nan']
-                # # drop N/A value in lst_link
-                # lst_link = [x for x in lst_link if str(x) != 'nan']
+                # get image and title of top 10 similar products_id
+                lst_link = df[df['product_id'].isin(sim_products_tfidf_gensim(product_id))]['image'].tolist()
                 
-                # # get list title of lst_link = product_name     
-                # lst_title = df[df['product_id'].isin(sim_products_tfidf_gensim(product_id))]['product_name'].tolist()
-                # # get title of lst_link = product_name from list lst_title with index in lst_index
-                # lst_title = [lst_title[i] for i in lst_index]
+                # get index of element in lst_link != N/A
+                lst_index = [i for i, x in enumerate(lst_link) if str(x) != 'nan']
+                # drop N/A value in lst_link
+                lst_link = [x for x in lst_link if str(x) != 'nan']
                 
-                # # get list product_id of lst_link = product_id
-                # lst_product_id = df[df['product_id'].isin(sim_products_tfidf_gensim(product_id))]['product_id'].tolist()
-                # # get product_id of lst_link = product_id from list lst_product_id with index in lst_index
-                # lst_product_id = [str(lst_product_id[i]) for i in lst_index]
+                # get list title of lst_link = product_name     
+                lst_title = df[df['product_id'].isin(sim_products_tfidf_gensim(product_id))]['product_name'].tolist()
+                # get title of lst_link = product_name from list lst_title with index in lst_index
+                lst_title = [lst_title[i] for i in lst_index]
                 
-                # # concat lst_title and lst_product_id
-                # lst_title = [lst_title[i] + ' - ' + lst_product_id[i] for i in range(len(lst_title))]
+                # get list product_id of lst_link = product_id
+                lst_product_id = df[df['product_id'].isin(sim_products_tfidf_gensim(product_id))]['product_id'].tolist()
+                # get product_id of lst_link = product_id from list lst_product_id with index in lst_index
+                lst_product_id = [str(lst_product_id[i]) for i in lst_index]
                 
-                # st.image(   lst_link, 
-                #             width=150, 
-                #             caption=lst_title,
-                #                                         )
+                # concat lst_title and lst_product_id
+                lst_title = [lst_title[i] + ' - ' + lst_product_id[i] for i in range(len(lst_title))]
+                
+                st.image(   lst_link, 
+                            width=150, 
+                            caption=lst_title,
+                                                        )
                 
             else:
                 st.write('Please input a product_id')
@@ -217,31 +218,31 @@ elif choice == 'Recommendation':
                 # show data with top 10 similar products_id select more information from df
                 st.table(df[df['product_id'].isin(product_id_list)][['product_id','product_name','price','rating']])
                 
-                # # get image and title of top 10 similar products_id
-                # lst_link = df[df['product_id'].isin(product_id_list)]['image'].tolist()
+                # get image and title of top 10 similar products_id
+                lst_link = df[df['product_id'].isin(product_id_list)]['image'].tolist()
                 
-                # # get index of element in lst_link != N/A
-                # lst_index = [i for i, x in enumerate(lst_link) if str(x) != 'nan']
-                # # drop N/A value in lst_link
-                # lst_link = [x for x in lst_link if str(x) != 'nan']
+                # get index of element in lst_link != N/A
+                lst_index = [i for i, x in enumerate(lst_link) if str(x) != 'nan']
+                # drop N/A value in lst_link
+                lst_link = [x for x in lst_link if str(x) != 'nan']
                 
-                # # get list title of lst_link = product_name     
-                # lst_title = df[df['product_id'].isin(product_id_list)]['product_name'].tolist()
-                # # get title of lst_link = product_name from list lst_title with index in lst_index
-                # lst_title = [lst_title[i] for i in lst_index]
+                # get list title of lst_link = product_name     
+                lst_title = df[df['product_id'].isin(product_id_list)]['product_name'].tolist()
+                # get title of lst_link = product_name from list lst_title with index in lst_index
+                lst_title = [lst_title[i] for i in lst_index]
                 
-                # # get list product_id of lst_link = product_id
-                # lst_product_id = df[df['product_id'].isin(product_id_list)]['product_id'].tolist()
-                # # get product_id of lst_link = product_id from list lst_product_id with index in lst_index
-                # lst_product_id = [str(lst_product_id[i]) for i in lst_index]
+                # get list product_id of lst_link = product_id
+                lst_product_id = df[df['product_id'].isin(product_id_list)]['product_id'].tolist()
+                # get product_id of lst_link = product_id from list lst_product_id with index in lst_index
+                lst_product_id = [str(lst_product_id[i]) for i in lst_index]
                 
-                # # concat lst_title and lst_product_id
-                # lst_title = [lst_title[i] + ' - ' + lst_product_id[i] for i in range(len(lst_title))]
+                # concat lst_title and lst_product_id
+                lst_title = [lst_title[i] + ' - ' + lst_product_id[i] for i in range(len(lst_title))]
                 
-                # st.image(   lst_link, 
-                #             width=150, 
-                #             caption=lst_title,
-                #                                         )
+                st.image(   lst_link, 
+                            width=150, 
+                            caption=lst_title,
+                                                        )
                                 
             else:
                 st.write('Please input a user_id')
