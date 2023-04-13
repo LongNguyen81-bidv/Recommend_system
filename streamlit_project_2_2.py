@@ -215,9 +215,9 @@ elif choice == 'Recommendation':
         df_user_user_id = pd.read_parquet('df_user_user_id.parquet')
         
         df_user_unique = pd.Series(df_user_user_id["user"].unique())
-        user_rand_lst = [random.randint(0, df_user_unique.shape[0]) for i in range(30)] # show 10 rand user id
+        user_rand_lst = [random.randint(0, df_user_unique.shape[0]) for i in range(30)] 
         user_random = df_user_unique.iloc[user_rand_lst].tolist()
-        user_selected = st.selectbox("Chọn user ID", options = user_random) # sample 2211818709 có 5 sp recom
+        user_selected = st.selectbox("Chọn user ID", options = user_random)
         
         
         if st.button('Recommend from user'):
