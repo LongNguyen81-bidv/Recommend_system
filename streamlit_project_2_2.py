@@ -96,10 +96,18 @@ if choice == 'Overview':
             - Kết luận
     + **Bước 6: Deployment & Feedback/ Act**
         - Xây dựng giao diện để người dùng trực tiếp nhập vào sản phẩm và gợi ý cho người dùng những sản phẩm mới.
+        - Lựa chọn thuật toán Gensim cho bài toán Contentbased filtering
+        - Áp dụng thuật toán ALS cho bài toán Collaborative filtering
     ''')
+    st.subheader('2.Giáo viên hướng dẫn')
     st.write('''
-    
+    **Cô : Khuất Thùy Phương**
     ''')
+    st.subheader('3.Học viên thực hiện')
+    st.write('''
+    **HV : Thái Thanh Phong - Nguyễn Hoàng Long**
+    ''')
+    
 # elif choice == 'Build Model':
 #     st.subheader('Build Model')
 #     st.write('#### Data Preprocessing')
