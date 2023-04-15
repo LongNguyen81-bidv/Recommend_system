@@ -233,9 +233,9 @@ elif choice == 'Recommendation':
         # user_selected = st.selectbox("Chọn user ID", options = user_lst)
         
         # load new_user_recs.parquet
-        df_new_user_recs = pd.read_parquet('new_user_recs.parquet')
+        # df_new_user_recs = pd.read_parquet('new_user_recs.parquet')
         
-        # user_ = df_new_user_recs['user'].tolist()
+        user_ = df_new_user_recs['user'].tolist()
         
         
         # creat list of user to show in selectbox get 50 user first
@@ -244,8 +244,8 @@ elif choice == 'Recommendation':
         user_selected = st.selectbox("Chọn user ID", options = user_lst)
         
         if st.button('Recommend from user'):
-            if user != '':
-            # if (user != '') & (user in user_):
+            # if user != '':
+            if (user != '') & (user in user_):
                             
                 # list of product_id
                 product_id_list = get_recommendations_list(user)
@@ -278,8 +278,8 @@ elif choice == 'Recommendation':
                             width=150, 
                             caption=lst_title,
                                                         )
-            # elif (user != '') & (user not in user_):
-            #     st.write('User not found')
+            elif (user != '') & (user not in user_):
+                st.write('User not found')
             
             elif user_selected != '':
                 # list of product_id
