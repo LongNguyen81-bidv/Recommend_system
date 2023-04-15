@@ -132,30 +132,47 @@ def sim_products_tfidf_gensim(product_id):
 
 
 # read data from user_recs.parquet
-df_ = pd.read_parquet('user_recs.parquet')
-# load df_user_user_id.parquet use pandas
-df_user_user_id = pd.read_parquet('df_user_user_id.parquet')
+# df_ = pd.read_parquet('user_recs.parquet')
+# # load df_user_user_id.parquet use pandas
+# df_user_user_id = pd.read_parquet('df_user_user_id.parquet')
+
 # load df_product_id_product_id_idx.parquet use pandas
 df_product_id_product_id_idx = pd.read_parquet('df_product_id_product_id_idx.parquet')
 
 
-def get_recommendations_list_idx(user_id_idx):
-    list_product_id_idx = []
-    for i in range(5):
-        idx = df_[df_['user_id_idx']==user_id_idx]['recommendations'].index.values[0]
-        list_product_id_idx.append(df_[df_['user_id_idx']==user_id_idx]['recommendations'][idx][i]['product_id_idx'])
-    return list_product_id_idx
+
+# def get_recommendations_list_idx(user_id_idx):
+#     list_product_id_idx = []
+#     for i in range(5):
+#         idx = df_[df_['user_id_idx']==user_id_idx]['recommendations'].index.values[0]
+#         list_product_id_idx.append(df_[df_['user_id_idx']==user_id_idx]['recommendations'][idx][i]['product_id_idx'])
+#     return list_product_id_idx
+
+
+# # define function to get list of product_id from user
+# def get_recommendations_list(user):
+#     # get user_id_idx from user
+#     user_id_idx = int(df_user_user_id[df_user_user_id['user']==user]['user_id_idx'].values[0])
+#     # get list of product_id_idx from user_id_idx
+#     list_product_id_idx = get_recommendations_list_idx(user_id_idx)
+#     # get list of product_id from list_product_id_idx
+#     list_product_id = []
+#     for i in list_product_id_idx:
+#         list_product_id.append(df_product_id_product_id_idx[df_product_id_product_id_idx['product_id_idx']==i]['product_id'].values[0])
+#     return list_product_id
+
+# load new_user_recs.parquet
+df_new_user_recs = pd.read_parquet('new_user_recs.parquet')
 
 
 # define function to get list of product_id from user
 def get_recommendations_list(user):
-    # get user_id_idx from user
-    user_id_idx = int(df_user_user_id[df_user_user_id['user']==user]['user_id_idx'].values[0])
-    # get list of product_id_idx from user_id_idx
-    list_product_id_idx = get_recommendations_list_idx(user_id_idx)
+    # get product_id_idx from df_new_user_recs
+    list_product_id_idx = []
+    for i in range(5):
+        list_product_id_idx.append(df_new_user_recs[df_new_user_recs['user']==user]['recommendations'].values[0][i]['product_id_idx'])
     # get list of product_id from list_product_id_idx
     list_product_id = []
     for i in list_product_id_idx:
         list_product_id.append(df_product_id_product_id_idx[df_product_id_product_id_idx['product_id_idx']==i]['product_id'].values[0])
     return list_product_id
-

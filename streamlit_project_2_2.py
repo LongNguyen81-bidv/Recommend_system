@@ -219,18 +219,33 @@ elif choice == 'Recommendation':
         
         user = st.text_input('Input a user')
         
-        # load df_user_user_id.parquet use pandas
-        df_user_user_id = pd.read_parquet('df_user_user_id.parquet')
+        # # load df_user_user_id.parquet use pandas
+        # df_user_user_id = pd.read_parquet('df_user_user_id.parquet')
         
-        df_user_unique = pd.Series(df_user_user_id["user"].unique())
-        user_rand_lst = [random.randint(0, df_user_unique.shape[0]) for i in range(30)] 
-        user_random = df_user_unique.iloc[user_rand_lst].tolist()
-        user_selected = st.selectbox("Chọn user ID", options = user_random)
+        # df_user_unique = pd.Series(df_user_user_id["user"].unique())
+        # user_rand_lst = [random.randint(0, df_user_unique.shape[0]) for i in range(30)] 
+        # user_random = df_user_unique.iloc[user_rand_lst].tolist()
+        # user_selected = st.selectbox("Chọn user ID", options = user_random)
         
+        # # creat list of user to show in selectbox get 50 user first
+        # user_lst = df_user_user_id['user'].tolist()[:30]
+        # # creat selectbox to choose user
+        # user_selected = st.selectbox("Chọn user ID", options = user_lst)
+        
+        # load new_user_recs.parquet
+        df_new_user_recs = pd.read_parquet('new_user_recs.parquet')
+        
+        user_ = df_new_user_recs['user'].tolist()
+        
+        
+        # creat list of user to show in selectbox get 50 user first
+        user_lst = df_new_user_recs['user'].tolist()[:100]
+        # creat selectbox to choose user
+        user_selected = st.selectbox("Chọn user ID", options = user_lst)
         
         if st.button('Recommend from user'):
-            if user != '':
-                
+            if (user != '') & (user in user_):
+                            
                 # list of product_id
                 product_id_list = get_recommendations_list(user)
                                                 
@@ -262,6 +277,8 @@ elif choice == 'Recommendation':
                             width=150, 
                             caption=lst_title,
                                                         )
+            elif (user != '') & (user not in user_):
+                st.write('User not found')
             
             elif user_selected != '':
                 # list of product_id
