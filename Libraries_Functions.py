@@ -181,6 +181,20 @@ def get_recommendations_list(user):
 def show_recommendations(product_id_new):
     # write title product_id_new
     st.write('Product_id:', product_id_new)
+    # show image of product_id_new
+    st.markdown(f'<a href="{df[df["product_id"] == int(product_id_new)]["link"].values[0]}" target="_blank"><img src="{df[df["product_id"] == int(product_id_new)]["image"].values[0]}" width="500" height="500"></a>',
+                unsafe_allow_html=True)
+    # show title of product_id_new
+    st.write(df[df["product_id"] == int(product_id_new)]["product_name"].values[0])
+    # show price of product_id_new
+    st.write('Price:', f'{df[df["product_id"] == int(product_id_new)]["price"].values[0]:,.0f} đ')
+    # show rating of product_id_new
+    st.write('Rating:', f'{df[df["product_id"] == int(product_id_new)]["rating"].values[0]:.2f}')
+    
+    # show recommendations for product_id_new
+    # st.subheader('**********************************************************')
+    st.subheader('Recommendations for this product:')
+    st.subheader('**********************************************************')
     
     # get image and title of top 10 similar products_id_new
     lst_link_image = df[df['product_id'].isin(sim_products_tfidf_gensim(product_id_new))]['image'].tolist()
