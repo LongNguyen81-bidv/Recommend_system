@@ -182,8 +182,12 @@ def show_recommendations(product_id_new):
     # write title product_id_new
     st.write('Product_id:', product_id_new)
     # show image of product_id_new
-    st.markdown(f'<a href="{df[df["product_id"] == int(product_id_new)]["link"].values[0]}" target="_blank"><img src="{df[df["product_id"] == int(product_id_new)]["image"].values[0]}" width="500" height="500"></a>',
-                unsafe_allow_html=True)
+    if str(df[df["product_id"] == int(product_id_new)]["image"].values[0]) != 'nan':
+        st.markdown(f'<a href="{df[df["product_id"] == int(product_id_new)]["link"].values[0]}" target="_blank"><img src="{df[df["product_id"] == int(product_id_new)]["image"].values[0]}" width="500" height="500"></a>',
+                    unsafe_allow_html=True)
+    else:
+        st.markdown(f'<a href="{df[df["product_id"] == int(product_id_new)]["link"].values[0]}" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" width="500" height="500"></a>',
+                    unsafe_allow_html=True)
     # show title of product_id_new
     st.write(df[df["product_id"] == int(product_id_new)]["product_name"].values[0])
     # show price of product_id_new
